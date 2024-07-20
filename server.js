@@ -1,4 +1,4 @@
-// server.js
+//server.js(name of .js file)
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -6,17 +6,15 @@ const fs = require('fs');
 
 const app = express();
 const port = 3000;
-
-// Middleware
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// Endpoint to handle form submission
+// handle form submission pls work ty
 app.post('/submit', (req, res) => {
     const { name, email, phone, location, date, details } = req.body;
 
-    // Create a data object
+    //object data for sm idk
     const formData = {
         name,
         email,
@@ -26,7 +24,7 @@ app.post('/submit', (req, res) => {
         details
     };
 
-    // Append the form data to a file
+    //merge the data to a new file called form-data.json
     fs.appendFile('form-data.json', JSON.stringify(formData) + '\n', (err) => {
         if (err) {
             console.error('Error writing to file', err);
@@ -34,12 +32,12 @@ app.post('/submit', (req, res) => {
         }
         console.log('Form Data saved to form-data.json');
 
-        // Send a response back to the client
+        //snding response back to client
         res.json('Form submitted successfully!');
     });
 });
 
-// Start the server
+//starting server
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });
