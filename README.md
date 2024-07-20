@@ -7,9 +7,9 @@ C:\Users\Admin>
 C:\Users\Admin>npm -v
 10.7.0
 
-C:\Users\Admin>mkdir Pawpetrol
+C:\Users\Admin>mkdir PawPatrol
 
-C:\Users\Admin>cd Pawpetrol
+C:\Users\Admin>cd PawPatrol
 
 C:\Users\Admin\Pawpetrol>npm init -y
 Wrote to C:\Users\Admin\Pawpetrol\package.json:
