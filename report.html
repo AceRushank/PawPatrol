@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Report Stray Dog Attacks</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -19,39 +27,44 @@
     <main class="container">
         <section class="form-section">
             <h2>Incident Report Form</h2>
-            <div class="map-container">
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d241316.67292430808!2d72.71637054316062!3d19.082502007375787!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c6306644edc1%3A0x5da4ed8f8d648c69!2sMumbai%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1721452712322!5m2!1sen!2sin"
-                    allowfullscreen="" loading="lazy">
-                </iframe>
-            </div>
-            <form action="http://localhost:3000/submit" method="POST">
-                <div class="form-group">
-                    <label for="name">Your Name:</label>
-                    <input type="text" id="name" name="name" required>
+            <form id="incidentForm" action="http://localhost:3000/submit" method="POST">
+                <div id="section1">
+                    <h3>Personal Information</h3>
+                    <div class="form-group">
+                        <label for="name">Your Name:</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Your Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Your Phone Number:</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+                    <div class="form-group">
+                        <button type="button" id="nextToSection2" class="button">Next</button>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="email">Your Email:</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="phone">Your Phone Number:</label>
-                    <input type="tel" id="phone" name="phone">
-                </div>
-                <div class="form-group">
-                    <label for="location">Location of the Incident:</label>
-                    <input type="text" id="location" name="location" required>
-                </div>
-                <div class="form-group">
-                    <label for="date">Date of the Incident:</label>
-                    <input type="date" id="date" name="date" required>
-                </div>
-                <div class="form-group">
-                    <label for="details">Details of the Incident/Remarks if Any:</label>
-                    <textarea id="details" name="details" required></textarea>
-                </div>
-                <div class="form-group">
-                    <button type="submit">Submit Report</button>
+                <div id="section2" style="display: none;">
+                    <h3>Incident Details</h3>
+                    <div class="form-group">
+                        <label for="location">Location of the Incident:</label>
+                        <input type="text" id="location" name="location" required>
+                    </div>
+                    <div id="map"></div>
+                    <div class="form-group">
+                        <label for="date">Date of the Incident:</label>
+                        <input type="date" id="date" name="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="details">Details of the Incident:</label>
+                        <textarea id="details" name="details" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" id="prevToSection1" class="button">Previous</button>
+                        <button type="submit" class="button">Submit Report</button>
+                    </div>
                 </div>
             </form>
         </section>
@@ -59,5 +72,34 @@
     <footer>
         <p>&copy; 2024 Report Stray Dog Attacks. All rights reserved.</p>
     </footer>
+    <script>
+        //next and submit buttons
+        document.getElementById('nextToSection2').addEventListener('click', () => {
+            document.getElementById('section1').style.display = 'none';
+            document.getElementById('section2').style.display = 'block';
+        });
+
+        document.getElementById('prevToSection1').addEventListener('click', () => {
+            document.getElementById('section2').style.display = 'none';
+            document.getElementById('section1').style.display = 'block';
+        });
+
+        //some weird leaflet map pls work
+        var map = L.map('map').setView([19.0825, 72.7164], 13);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        var marker;
+
+        map.on('click', function(e) {
+            if (marker) {
+                map.removeLayer(marker);
+            }
+            marker = L.marker(e.latlng).addTo(map);
+            document.getElementById('location').value = e.latlng.lat + ", " + e.latlng.lng;
+        });
+    </script>
 </body>
 </html>
