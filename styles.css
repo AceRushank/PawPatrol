@@ -146,7 +146,6 @@ footer {
     border: 0;
 }
 
-/* Animations */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -158,7 +157,6 @@ footer {
     }
 }
 
-/* Responsive Design */
 @media (max-width: 600px) {
     .container {
         width: 95%;
