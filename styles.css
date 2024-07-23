@@ -1,16 +1,17 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f0f2f5;
+    background-color: #1e1e1e;
+    color: #f0f0f0;
     margin: 0;
     padding: 0;
 }
 
 header {
-    background-color: #2a3eb1;
+    background-color: #333;
     color: white;
     padding: 20px;
     text-align: center;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
 header h1 {
@@ -39,25 +40,28 @@ nav ul li a {
     color: white;
     text-decoration: none;
     font-weight: bold;
+    padding: 10px 15px;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 nav ul li a:hover {
-    text-decoration: underline;
+    background-color: #444;
+    border-radius: 5px;
 }
 
 .container {
     width: 90%;
     max-width: 800px;
     margin: 30px auto;
-    background: white;
+    background: #2e2e2e;
     padding: 30px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
     border-radius: 10px;
     animation: fadeIn 1s ease-in-out;
 }
 
 .container h2 {
-    color: #2a3eb1;
+    color: #c0c0c0;
     margin-bottom: 20px;
     font-size: 1.75em;
 }
@@ -77,14 +81,16 @@ nav ul li a:hover {
     width: 100%;
     padding: 10px;
     box-sizing: border-box;
-    border: 1px solid #ddd;
+    border: 1px solid #555;
     border-radius: 5px;
+    background-color: #333;
+    color: #f0f0f0;
     transition: border-color 0.3s;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
-    border-color: #2a3eb1;
+    border-color: #888;
 }
 
 .form-group textarea {
@@ -93,7 +99,7 @@ nav ul li a:hover {
 }
 
 .form-group button {
-    background-color: #2a3eb1;
+    background-color: #444;
     color: white;
     border: none;
     padding: 15px 30px;
@@ -104,12 +110,12 @@ nav ul li a:hover {
 }
 
 .form-group button:hover {
-    background-color: #1d2a8c;
+    background-color: #666;
 }
 
 .button {
     display: inline-block;
-    background-color: #2a3eb1;
+    background-color: #444;
     color: white;
     padding: 10px 20px;
     border-radius: 5px;
@@ -118,18 +124,18 @@ nav ul li a:hover {
 }
 
 .button:hover {
-    background-color: #1d2a8c;
+    background-color: #666;
 }
 
 footer {
     text-align: center;
     padding: 20px;
-    background: #2a3eb1;
+    background: #333;
     color: white;
     position: relative;
     bottom: 0;
     width: 100%;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
 }
 
 .map-container {
@@ -145,7 +151,6 @@ footer {
     border: 0;
 }
 
-/* animations or where things could go wrong */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -157,7 +162,6 @@ footer {
     }
 }
 
-/* responsive feature */
 @media (max-width: 600px) {
     .container {
         width: 95%;
