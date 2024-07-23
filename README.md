@@ -11,8 +11,8 @@ C:\Users\Admin>mkdir PawPatrol
 
 C:\Users\Admin>cd PawPatrol
 
-C:\Users\Admin\Pawpetrol>npm init -y
-Wrote to C:\Users\Admin\Pawpetrol\package.json:
+C:\Users\Admin\PawPatrol>npm init -y
+Wrote to C:\Users\Admin\PawPatrol\package.json:
 
 {
   "name": "stray-dog-report",
@@ -36,7 +36,7 @@ Wrote to C:\Users\Admin\Pawpetrol\package.json:
 
 
 
-C:\Users\Admin\Pawpetrol>npm install body-parser cors express
+C:\Users\Admin\PawPatrol>npm install body-parser cors express
 
 added 66 packages, and audited 67 packages in 1s
 
@@ -45,6 +45,6 @@ added 66 packages, and audited 67 packages in 1s
 
 found 0 vulnerabilities
 
-C:\Users\Admin\Pawpetrol>node server.js
+C:\Users\Admin\PawPatrol>node server.js
 Server running at http://localhost:3000
 Form Data saved to form-data.json
