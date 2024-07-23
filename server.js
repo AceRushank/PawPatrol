@@ -12,9 +12,9 @@ const port = 3000;
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname))); // Serving static files from the root directory
+app.use(express.static(path.join(__dirname))); //serving static files from the root directory aka from the menu
 
-// Function to read the existing data
+//fn to read the existing data
 const readData = (callback) => {
     fs.readFile('form-data.json', 'utf8', (err, data) => {
         if (err && err.code !== 'ENOENT') {
