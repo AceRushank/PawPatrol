@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Report Stray Dog Attacks</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <style>
         #map {
             height: 400px;
@@ -14,6 +14,7 @@
         }
     </style>
 </head>
+
 <body>
     <header>
         <h1>Report Stray Dog Attacks</h1>
@@ -27,7 +28,7 @@
     <main class="container">
         <section class="form-section">
             <h2>Incident Report Form</h2>
-            <form id="incidentForm" action="http://localhost:3000/submit" method="POST">
+            <form id="incidentForm" action="thankyou.html" method="POST">
                 <div id="section1">
                     <h3>Personal Information</h3>
                     <div class="form-group">
@@ -50,7 +51,11 @@
                     <h3>Incident Details</h3>
                     <div class="form-group">
                         <label for="location">Location of the Incident:</label>
-                        <input type="text" id="location" name="location" required>
+                        <input type="text" id="location" name="location">
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address (Optional):</label>
+                        <input type="text" id="address" name="address">
                     </div>
                     <div id="map"></div>
                     <div class="form-group">
@@ -72,8 +77,10 @@
     <footer>
         <p>&copy; 2024 Report Stray Dog Attacks. All rights reserved.</p>
     </footer>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
-        //next and submit buttons
+        // Navigation between form sections
         document.getElementById('nextToSection2').addEventListener('click', () => {
             document.getElementById('section1').style.display = 'none';
             document.getElementById('section2').style.display = 'block';
@@ -84,7 +91,7 @@
             document.getElementById('section1').style.display = 'block';
         });
 
-        //some weird leaflet map pls work
+        // Initialize the map
         var map = L.map('map').setView([19.0825, 72.7164], 13);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
