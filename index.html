@@ -1,35 +1,43 @@
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Home - Report Stray Dog Attacks</title>
-        <link rel="stylesheet" href="styles.css">
-    </head>
-    <body>
-        <header>
-            <h1>Report Stray Dog Attacks</h1>
-            <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="report.html">Report Incident</a></li>
-                </ul>
-            </nav>
-        </header>
-        <main class="container">
-            <section>
-                <h2>Welcome to the Stray Dog Attack Reporting System</h2>
-                <p>
-                    Our mission is to help communities stay safe by providing a platform to report stray dog attacks. If you
-                    have witnessed or been a victim of a stray dog attack, please report the incident using our form.
-                </p>
-                <p>
-                    <a href="report.html" class="button">Report an Incident</a>
-                </p>
-            </section>
-        </main>
-        <footer>
-            <p>&copy; 2024 Report Stray Dog Attacks. All rights reserved.</p>
-        </footer>
-    </body>
-    </html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Stray Dog Attacks</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Report Stray Dog Attacks</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="report.html">Report Incident</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="container">
+        <section class="intro-section">
+            <h2>Welcome to the Dog Attack Reporting Platform</h2>
+            <p>This platform allows you to report stray dog attacks in your area. Your reports will help create a safer environment for everyone.</p>
+            <p>Click the button below to report an incident.</p>
+            <a href="report.html" class="button">Report an Incident</a>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Report Stray Dog Attacks. All rights reserved.</p>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</body>
+
+</html>
