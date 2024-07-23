@@ -80,7 +80,7 @@
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
-        // Navigation between form sections
+        //navigation between form sections
         document.getElementById('nextToSection2').addEventListener('click', () => {
             document.getElementById('section1').style.display = 'none';
             document.getElementById('section2').style.display = 'block';
@@ -91,7 +91,7 @@
             document.getElementById('section1').style.display = 'block';
         });
 
-        // Initialize the map
+        //initialize the map
         var map = L.map('map').setView([19.0825, 72.7164], 13);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
