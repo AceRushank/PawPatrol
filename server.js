@@ -4,14 +4,17 @@ const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
 const nodemailer = require('nodemailer');
+
 const app = express();
 const port = 3000;
-//middleware
+
+// Middleware
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname))); //serving static files from the root directry
-//fn to read the existing data
+app.use(express.static(path.join(__dirname))); // Serving static files from the root directory
+
+// Function to read the existing data
 const readData = (callback) => {
     fs.readFile('form-data.json', 'utf8', (err, data) => {
         if (err && err.code !== 'ENOENT') {
@@ -22,7 +25,8 @@ const readData = (callback) => {
         }
     });
 };
-//fn to write the new data
+
+// Function to write the new data
 const writeData = (data, callback) => {
     fs.writeFile('form-data.json', JSON.stringify(data, null, 2), 'utf8', (err) => {
         if (err) {
@@ -33,7 +37,8 @@ const writeData = (data, callback) => {
         }
     });
 };
-//fn to validate form data
+
+// Function to validate form data
 const validateFormData = (formData) => {
     const { name, email, phone, location, date, details } = formData;
     if (!name || !email || !location || !date || !details) {
@@ -41,22 +46,24 @@ const validateFormData = (formData) => {
     }
     return true;
 };
-//config of nodemailer
+
+// Configuration of nodemailer
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'pawpatrolorgntn@gmail.com', //your email address
-        pass: 'ovyb mexi rsrp bjlp' //appspecific password
+        user: 'pawpatrolorgntn@gmail.com', // Your email address
+        pass: 'ovyb mexi rsrp bjlp' // App-specific password
     },
     tls: {
         rejectUnauthorized: false
     }
 });
-//fn to send email
-const sendEmail = (formData, callback) => {
+
+// Function to send email to admin
+const sendEmailToAdmin = (formData, callback) => {
     const mailOptions = {
         from: 'pawpatrolorgntn@gmail.com',
-        to: 'realgreen2005@gmail.com', //the receiver's email address
+        to: 'realgreen2005@gmail.com', // The receiver's email address
         subject: 'New Stray Dog Attack Report Submitted',
         text: `A new stray dog attack report has been submitted with the following details:
         
@@ -64,9 +71,11 @@ const sendEmail = (formData, callback) => {
         Email: ${formData.email}
         Phone: ${formData.phone}
         Location: ${formData.location}
+        Address: ${formData.address || "N/A"}
         Date: ${formData.date}
         Details: ${formData.details}`
     };
+
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
             console.error('Error sending email', error);
@@ -77,49 +86,91 @@ const sendEmail = (formData, callback) => {
         }
     });
 };
-//to handle form submission
+
+// Function to send confirmation email to user
+const sendConfirmationEmail = (formData, callback) => {
+    const mailOptions = {
+        from: 'pawpatrolorgntn@gmail.com',
+        to: formData.email, // The user's email address
+        subject: 'Confirmation: Your Stray Dog Attack Report',
+        text: `Dear ${formData.name},
+        
+        Thank you for reporting the stray dog attack. We have received your report with the following details:
+        
+        Name: ${formData.name}
+        Email: ${formData.email}
+        Phone: ${formData.phone}
+        Location: ${formData.location}
+        Address: ${formData.address || "N/A"}
+        Date: ${formData.date}
+        Details: ${formData.details}
+        
+        We appreciate your help in making our community safer.
+        
+        Best regards,
+        Paw Patrol`
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.error('Error sending confirmation email', error);
+            callback(error);
+        } else {
+            console.log('Confirmation email sent: ' + info.response);
+            callback(null);
+        }
+    });
+};
+
+// To handle form submission
 app.post('/submit', (req, res) => {
-    const { name, email, phone, location, date, details } = req.body;
+    const { name, email, phone, location, address, date, details } = req.body;
 
     const formData = {
         name: name.trim(),
         email: email.trim(),
         phone: phone.trim() || "N/A",
         location: location.trim(),
-        date: new Date(date).toISOString().split('T')[0],
+        address: address ? address.trim() : null,
+        date: new Date(date),
         details: details.trim()
     };
 
     if (!validateFormData(formData)) {
-        return res.status(400).json({ message: 'Invalid form data' });
+        return res.status(400).json({ message: 'Please fill in all required fields.' });
     }
-    readData((err, data) => {
+
+    readData((err, existingData) => {
         if (err) {
-            return res.status(500).json({ message: 'Internal Server Error' });
+            return res.status(500).json({ message: 'Error reading existing data.' });
         }
-        data.push(formData);
 
-        writeData(data, (err) => {
+        const updatedData = [...existingData, formData];
+
+        writeData(updatedData, (err) => {
             if (err) {
-                return res.status(500).json({ message: 'Internal Server Error' });
+                return res.status(500).json({ message: 'Error saving form data.' });
             }
-            console.log('Form Data saved to form-data.json');
 
-            //sending email after saving the data
-            sendEmail(formData, (err) => {
+            // Send email to admin
+            sendEmailToAdmin(formData, (err) => {
                 if (err) {
-                    return res.status(500).json({ message: 'Error sending email' });
+                    return res.status(500).json({ message: 'Error sending email to admin.' });
                 }
-                res.redirect('/thankyou.html'); //redirecting to Thank You page
+
+                // Send confirmation email to user
+                sendConfirmationEmail(formData, (err) => {
+                    if (err) {
+                        return res.status(500).json({ message: 'Error sending confirmation email to user.' });
+                    }
+
+                    res.status(200).json({ message: 'Form data saved successfully and emails sent.' });
+                });
             });
         });
     });
 });
-//serving the Thank You page
-app.get('/thankyou.html', (req, res) => {
-    res.sendFile(path.join(__dirname, 'thankyou.html'));
-});
-//startinggggg
+// Start the server
 app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
+    console.log(`Server is running on port ${port}`);
 });
