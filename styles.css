@@ -181,3 +181,28 @@ footer {
         gap: 10px;
     }
 }
+
+/* Additional Styles */
+.section {
+    margin: 50px 0;
+    padding: 20px;
+    background-color: #2e2e2e;
+    border-radius: 10px;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.section h3 {
+    color: #c0c0c0;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+}
+
+.section p {
+    color: #d0d0d0;
+    font-size: 1.1em;
+}
+
+.section img {
+    max-width: 100%;
+    border-radius: 10px;
+}
