@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Report Stray Dog Attacks</title>
+    <title>Report Incident - Report Stray Dog Attacks</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
@@ -80,7 +80,6 @@
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
-        //navigation between form sections
         document.getElementById('nextToSection2').addEventListener('click', () => {
             document.getElementById('section1').style.display = 'none';
             document.getElementById('section2').style.display = 'block';
@@ -91,7 +90,6 @@
             document.getElementById('section1').style.display = 'block';
         });
 
-        //initialize the map
         var map = L.map('map').setView([19.0825, 72.7164], 13);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -107,6 +105,14 @@
             marker = L.marker(e.latlng).addTo(map);
             document.getElementById('location').value = e.latlng.lat + ", " + e.latlng.lng;
         });
+
+        document.getElementById('incidentForm').addEventListener('submit', function(e) {
+            e.preventDefault();  // Prevent default form submission for debugging
+
+            // Debugging message to check if the event listener is working
+            console.log('Form submitted');
+        });
     </script>
 </body>
+
 </html>
