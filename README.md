@@ -1,4 +1,4 @@
-#PawPatrol - Animal Incident Reporting Platform
+PawPatrol - Animal Incident Reporting Platform
 PawPatrol is a platform designed to help users report incidents involving stray dogs and other animals to NGOs for prompt assistance.
 
 Features:
